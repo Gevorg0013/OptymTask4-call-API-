@@ -6,7 +6,9 @@ import io.project.app.account.client.Client;
 import io.project.app.account.dto.AlbumsDTO;
 import io.project.app.account.dto.PhotosDTO;
 import io.project.app.account.dto.TodosDTO;
+import io.project.app.account.dto.UsersDTO;
 import java.util.List;
+import java.util.Optional;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,7 +39,7 @@ public class userController {
     public ResponseEntity getPosts() {
         final List<PostDTO> users = this.service.getPosts();
         if (users.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Users not found!");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Posts not found!");
         }
 
         return ResponseEntity.ok(users);
@@ -48,7 +50,7 @@ public class userController {
     public ResponseEntity getComents() {
         final List<CommentDTO> users = this.service.getComments();
         if (users.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Users not found!");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Coments not found!");
         }
 
         return ResponseEntity.ok(users);
@@ -59,7 +61,7 @@ public class userController {
     public ResponseEntity getALbums() {
         final List<AlbumsDTO> users = this.service.getAlbums();
         if (users.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Users not found!");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Albums not found!");
         }
 
         return ResponseEntity.ok(users);
@@ -80,6 +82,17 @@ public class userController {
 
     public ResponseEntity getTodos() {
         final List<TodosDTO> users = this.service.getTodos();
+        if (users.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Todos not found!");
+        }
+
+        return ResponseEntity.ok(users);
+    }
+
+    @GetMapping(path = "/getUsers")
+
+    public ResponseEntity getUsers() {
+        final List<UsersDTO>users = this.service.getUsers();
         if (users.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Users not found!");
         }

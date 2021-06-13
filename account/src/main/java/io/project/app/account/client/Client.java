@@ -10,12 +10,12 @@ import io.project.app.account.dto.CommentDTO;
 import io.project.app.account.dto.PhotosDTO;
 import io.project.app.account.dto.PostDTO;
 import io.project.app.account.dto.TodosDTO;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import io.project.app.account.dto.UsersDTO;
 
 import io.vavr.control.Try;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -39,6 +39,8 @@ public class Client {
     private static final String USERS_API_PHOTOS = "https://jsonplaceholder.typicode.com/photos";
 
     private static final String USERS_API_TODOS = "https://jsonplaceholder.typicode.com/todos";
+
+    private static final String USERS_API_USERS = "https://jsonplaceholder.typicode.com/users";
 
     public List<PostDTO> getPosts() {
 
@@ -100,4 +102,15 @@ public class Client {
         return Arrays.asList(response.get());
     }
 
+    public List<UsersDTO> getUsers() {
+
+        final Try<UsersDTO[]> response = Try.of(()
+                -> this.restTemplate.getForObject(USERS_API_USERS, UsersDTO[].class));
+        if (!response.isSuccess()) {
+            System.out.print("Error to get quote users: " + response.getCause().getLocalizedMessage());
+            return null;
+        }
+
+        return Arrays.asList(response.get());
+    }
 }
